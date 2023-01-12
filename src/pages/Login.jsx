@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../assets/logo.svg";
+import Logo from "../assets/logo.png";
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios"
@@ -24,54 +24,54 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if(localStorage.getItem('chat-app-user')) {
+    if (localStorage.getItem('chat-app-user')) {
       navigate('/');
     }
-  }, );
-  
+  });
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   if( handleValidation()){
-    const {password,  username} = values;
-    const {data} = await axios.post(loginRoute, {
-      username,
-      password
-    });
-    if(data.status === false){
-      toast.error(data.msg, toastOptions);
-    } else {
-      localStorage.setItem('chat-app-user', JSON.stringify(data.user));
-    }
-    navigate("/");
-   };
+    if (handleValidation()) {
+      const { password, username } = values;
+      const { data } = await axios.post(loginRoute, {
+        username,
+        password
+      });
+      if (data.status === false) {
+        toast.error(data.msg, toastOptions);
+      } else {
+        localStorage.setItem('chat-app-user', JSON.stringify(data.user));
+      }
+      navigate("/");
+    };
   };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleValidation = () =>{
-    const {password, username} = values;
-    if(password ===  ""){
+  const handleValidation = () => {
+    const { password, username } = values;
+    if (password === "") {
       toast.error("Password required!", toastOptions);
       return false;
-    } else if(username.length === ""){
+    } else if (username.length === "") {
       toast.error("Username required", toastOptions);
       return false;
-    } 
-    return true;
     }
-  
+    return true;
+  }
+
   return (
     <>
       <FormContainer>
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="brand">
             <img src={Logo} alt="Logo" />
-            <h1>RChat</h1>
+            <h1>VLaunchU</h1>
           </div>
-          <input type="text" placeholder='Username' name='username' onChange={(e) => handleChange(e)} min="3"/>
+          <input type="text" placeholder='Username' name='username' onChange={(e) => handleChange(e)} min="3" />
           <input type="password" placeholder='Password' name='password' onChange={(e) => handleChange(e)} />
           <button type='submit' >Login</button>
           <span>Don't  have an account? <Link to="/register">Register</Link>

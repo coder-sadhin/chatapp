@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../assets/logo.svg";
+import Logo from "../assets/logo.png";
 import { ToastContainer, toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
 import { registerRoute } from '../utils/APIRoutes';
 
@@ -27,50 +27,50 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   if( handleValidation()){
-    const {password,  username, email} = values;
-    const {data} = await axios.post(registerRoute, {
-      username,
-      email,
-      password,
-    });
-    if(data.status === false){
-      toast.error(data.msg, toastOptions);
-    } else {
-      localStorage.setItem('chat-app-user', JSON.stringify(data.user));
-    }
-    navigate("/");
-   };
+    if (handleValidation()) {
+      const { password, username, email } = values;
+      const { data } = await axios.post(registerRoute, {
+        username,
+        email,
+        password,
+      });
+      if (data.status === false) {
+        toast.error(data.msg, toastOptions);
+      } else {
+        localStorage.setItem('chat-app-user', JSON.stringify(data.user));
+      }
+      navigate("/");
+    };
   };
 
   useEffect(() => {
-    if(localStorage.getItem('chat-app-user')) {
+    if (localStorage.getItem('chat-app-user')) {
       navigate('/');
     }
-  }, );
+  });
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleValidation = () =>{
-    const {password, confirmPassword, username, email} = values;
-    if(password!==confirmPassword){
+  const handleValidation = () => {
+    const { password, confirmPassword, username, email } = values;
+    if (password !== confirmPassword) {
       toast.error("Enter correct Confirm Password!", toastOptions);
       return false;
-    } else if(username.length < 3){
+    } else if (username.length < 3) {
       toast.error("Username must be atleast 3 characters.", toastOptions);
       return false;
-    } else if(password.length < 4){
+    } else if (password.length < 4) {
       toast.error("Password must be atleast 4 characters.", toastOptions);
       return false;
-    } else  if(email === "") {
+    } else if (email === "") {
       toast.error("Email is required", toastOptions);
       return false;
     }
     return true;
-    }
-  
+  }
+
 
   return (
     <>
@@ -78,7 +78,7 @@ const Register = () => {
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="brand">
             <img src={Logo} alt="Logo" />
-            <h1>RChat</h1>
+            <h1>VLaunchU</h1>
           </div>
           <input type="text" placeholder='Username' name='username' onChange={(e) => handleChange(e)} />
           <input type="email" placeholder='Email' name='email' onChange={(e) => handleChange(e)} />
